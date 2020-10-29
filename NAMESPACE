@@ -1,0 +1,24 @@
+export(import_ohlc,
+       import_quote,
+       import_series,
+       sym_fred,
+       sym_tiingo,
+       sym_yahoo)
+
+importFrom(quantmod,
+    getSymbols)
+
+import(methods, zoo, xts, TTR)
+
+S3method(import_ohlc, symbol_spec)
+S3method(import_ohlc, tiingo)
+S3method(import_ohlc, yahoo)
+
+S3method(import_quote, symbol_spec)
+#S3method(import_quote, tiingo)
+#S3method(import_quote, yahoo)
+
+S3method(import_series, symbol_spec)
+S3method(import_series, fred)
+
+S3method(c, symbol_spec)

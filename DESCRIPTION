@@ -1,0 +1,12 @@
+Package: fimvisr
+Type: Package
+Title: Financial Market Data Import & Visualization
+Version: 0.1.0
+Authors@R: c(
+  person(given=c("Jeffrey","A."), family="Ryan", role=c("aut","cph")),
+  person(given=c("Joshua","M."), family="Ulrich", role=c("cre","aut"), email="josh.m.ulrich@gmail.com")
+  )
+Depends: R (>= 3.2.0), xts(>= 0.10-0), zoo, methods
+Imports: quantmod
+Description: Import and visualize financial market data
+License: GPL-3
