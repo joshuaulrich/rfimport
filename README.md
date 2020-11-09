@@ -23,6 +23,6 @@ This package is a place to test alternative implementations that improve on the 
 * We should consider using Garrett See's [qmao](https://github.com/gsee/qmao) for inspiration and suggestions of things to consider.
     * For example, use 'price frames' to replace `do.call(merge, list_of_objects_from_getSymbols)`
 
-
+    * Other side-effects to get rid of: * 'Defaults' functionality: `setDefaults()`, `getDefaults()`, `importDefaults()`, `unsetDefaults()`. How do we achieve similar functionality in a pure way?
 
 
