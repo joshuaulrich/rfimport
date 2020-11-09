@@ -22,49 +22,49 @@
 sym_yahoo <-
 function(symbols, ...)
 {
-  structure(symbols,
-            #         url = "...",
-            #         adjust = TRUE,
-            return_class = "xts",
-            curl_options = list(),
-            class = c("symbol_spec", "yahoo"))
+    structure(symbols,
+              #         url = "...",
+              #         adjust = TRUE,
+              return_class = "xts",
+              curl_options = list(),
+              class = c("symbol_spec", "yahoo"))
 }
 
 sym_tiingo <-
 function(symbols, api_key = NULL, ...)
 {
-  if (is.null(api_key)) {
-    # url to where they can get a free api key
-    stop("you need an api key to import Tiingo data")
-  }
-  structure(symbols,
-            #         url = "...",
-            #         adjust = TRUE,
-            api_key = api_key,
-            return_class = "xts",
-            curl_options = list(),
-            class = c("symbol_spec", "tiingo"))
+    if (is.null(api_key)) {
+        # url to where they can get a free api key
+        stop("you need an api key to import Tiingo data")
+    }
+    structure(symbols,
+              #         url = "...",
+              #         adjust = TRUE,
+              api_key = api_key,
+              return_class = "xts",
+              curl_options = list(),
+              class = c("symbol_spec", "tiingo"))
 }
 
 sym_fred <-
 function(symbols, ...)
 {
-  structure(symbols,
-            #         url = "...",
-            #         adjust = TRUE,
-            return_class = "xts",
-            class = c("symbol_spec", "fred"))
+    structure(symbols,
+              #         url = "...",
+              #         adjust = TRUE,
+              return_class = "xts",
+              class = c("symbol_spec", "fred"))
 }
 
 c.symbol_spec <-
 function(...)
 {
- # I don't like this. It should always return the same type of object
- # But otherwise I don't know how to have a list of specs to different
- # sources.
- objects <- list(...)
- if (length(objects) > 1) {
-   result <- structure(list(...), class = "symbol_spec_list")
- }
- return(result)
+    # I don't like this. It should always return the same type of object
+    # But otherwise I don't know how to have a list of specs to different
+    # sources.
+    objects <- list(...)
+    if (length(objects) > 1) {
+        result <- structure(list(...), class = "symbol_spec_list")
+    }
+    return(result)
 }
