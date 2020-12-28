@@ -18,53 +18,73 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# TODO: try turning these into lists
+
 ### symbol_spec connection objects
 sym_yahoo <-
 function(symbols, ...)
 {
-    structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              return_class = "xts",
-              curl_options = list(),
-              class = c("symbol_spec", "yahoo"))
+    # TODO: check `...` for curl_options
+    src_spec <- lapply(symbols, structure, class = "yahoo")
+    sym_spec <- structure(src_spec,
+                          curl_options = list(),
+                          class = "symbol_spec")
+    setNames(sym_spec, symbols)
 }
 
 sym_tiingo <-
 function(symbols, api_key = NULL, ...)
 {
-    if (is.null(api_key)) {
-        # url to where they can get a free api key
-        stop("you need an api key to import Tiingo data")
-    }
-    structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              api_key = api_key,
-              return_class = "xts",
-              curl_options = list(),
-              class = c("symbol_spec", "tiingo"))
+  if (is.null(api_key)) {
+    # url to where they can get a free api key
+    stop("you need an api key to import Tiingo data")
+  }
+  structure(symbols,
+            #         url = "...",
+            #         adjust = TRUE,
+            api_key = api_key,
+            return_class = "xts",
+            curl_options = list(),
+            spec_class <- "tiingo",
+            class = c("symbol_spec", "tiingo"))
 }
 
 sym_fred <-
 function(symbols, ...)
 {
-    structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              return_class = "xts",
-              class = c("symbol_spec", "fred"))
+    src_spec <- lapply(symbols, structure, class = "fred")
+    sym_spec <- structure(src_spec, class = "symbol_spec")
+    setNames(sym_spec, symbols)
+}
+
+print.symbol_spec <-
+function(x, ..., quote = FALSE)
+{
+    n <- sapply(x, class)
+    y <- unlist(x, recursive = FALSE, use.names = FALSE)
+    p <- setNames(n, y)
+    print(p, ..., quote = quote)
+    invisible(p)
 }
 
 c.symbol_spec <-
 function(...)
 {
-    # I don't like this. It should always return the same type of object
-    # But otherwise I don't know how to have a list of specs to different
-    # sources.
-    objects <- list(...)
-    if (length(objects) > 1) {
-        result <- structure(list(...), class = "symbol_spec_list")
-    }
-    return(result)
+    specs <- unlist(list(...), recursive = FALSE, use.name = TRUE)
+    structure(specs, class = "symbol_spec")
 }
+
+#`[[.symbol_spec` <-
+#function(x, i)
+#{
+#    y <- NextMethod("x")
+#    structure(list(y), names = names(x)[i])
+#}
+#
+#`[<-.symbol_spec` <-
+#`[[<-.symbol_spec` <-
+#function(x, i, value)
+#{
+#    x <- "hi"
+#    cat("yippie\n")
+#}
