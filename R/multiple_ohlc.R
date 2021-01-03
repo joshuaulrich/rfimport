@@ -52,4 +52,5 @@ function(x, ..., n = 5)
         write(out, "")
         cat("\n")
     }
+    invisible(x)
 }
