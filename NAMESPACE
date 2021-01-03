@@ -9,6 +9,9 @@ importFrom(quantmod,
     getSymbols)
 importFrom(utils,
     capture.output)
+importFrom(stats,
+    setNames)
+
 
 import(methods, zoo, xts, TTR)
 

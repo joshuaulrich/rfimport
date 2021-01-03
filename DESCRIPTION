@@ -1,7 +1,7 @@
 Package: fimvisr
 Type: Package
 Title: Financial Market Data Import & Visualization
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
   person(given=c("Jeffrey","A."), family="Ryan", role=c("aut","cph")),
   person(given=c("Joshua","M."), family="Ulrich", role=c("cre","aut"), email="josh.m.ulrich@gmail.com")
