@@ -7,6 +7,8 @@ export(import_ohlc,
 
 importFrom(quantmod,
     getSymbols)
+importFrom(utils,
+    capture.output)
 
 import(methods, zoo, xts, TTR)
 
@@ -22,3 +24,5 @@ S3method(import_series, symbol_spec)
 S3method(import_series, fred)
 
 S3method(c, symbol_spec)
+
+S3method(print, multiple_ohlc)
