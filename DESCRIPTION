@@ -10,3 +10,4 @@ Depends: R (>= 3.2.0), xts(>= 0.10-0), zoo, methods
 Imports: quantmod, TTR
 Description: Import and visualize financial market data.
 License: GPL-3
+Suggests: tinytest
