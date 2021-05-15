@@ -22,31 +22,40 @@
 
 ### symbol_spec connection objects
 sym_yahoo <-
-function(symbols, ...)
+function(symbols,
+         ...,
+         curl_options = list(),
+         return_class = "xts")
 {
-    # TODO: check `...` for curl_options
-    src_spec <- lapply(symbols, structure, class = "yahoo")
-    sym_spec <- structure(src_spec,
-                          curl_options = list(),
-                          class = "symbol_spec")
-    setNames(sym_spec, symbols)
+    tickers <- list(yahoo = structure(symbols, class = "yahoo"))
+
+    structure(tickers,
+              curl_options = curl_options,
+              return_class = return_class,
+              class = "symbol_spec",
+              ...)
 }
 
 sym_tiingo <-
-function(symbols, api_key = NULL, ...)
+function(symbols,
+         ...,
+         api_key = NULL,
+         curl_options = list(),
+         return_class = "xts")
 {
     if (is.null(api_key)) {
         # url to where they can get a free api key
         stop("you need an api key to import Tiingo data")
     }
-    structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
+
+    tickers <- list(tiingo = structure(symbols, class = "tiingo"))
+
+    structure(tickers,
+              curl_options = curl_options,
+              return_class = return_class,
               api_key = api_key,
-              return_class = "xts",
-              curl_options = list(),
-              spec_class = "tiingo",
-              class = c("symbol_spec", "tiingo"))
+              class = "symbol_spec",
+              ...)
 }
 
 sym_fred <-
@@ -62,7 +71,7 @@ function(x, ..., quote = FALSE)
 {
     n <- sapply(x, class)
     y <- unlist(x, recursive = FALSE, use.names = FALSE)
-    p <- setNames(n, y)
+    p <- setNames(list(y), n)
     print(p, ..., quote = quote)
     invisible(p)
 }
