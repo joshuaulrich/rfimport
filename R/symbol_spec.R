@@ -27,13 +27,13 @@ function(symbols,
          curl_options = list(),
          return_class = "xts")
 {
-    tickers <- list(yahoo = structure(symbols, class = "yahoo"))
+    tickers <- structure(symbols,
+                         curl_options = curl_options,
+                         return_class = return_class,
+                         ...,
+                         class = "yahoo")
 
-    structure(tickers,
-              curl_options = curl_options,
-              return_class = return_class,
-              class = "symbol_spec",
-              ...)
+    structure(list(yahoo = tickers), class = "symbol_spec")
 }
 
 sym_tiingo <-
@@ -48,14 +48,14 @@ function(symbols,
         stop("you need an api key to import Tiingo data")
     }
 
-    tickers <- list(tiingo = structure(symbols, class = "tiingo"))
+    tickers <- structure(symbols,
+                         curl_options = curl_options,
+                         return_class = return_class,
+                         api_key = api_key,
+                         ...,
+                         class = "tiingo")
 
-    structure(tickers,
-              curl_options = curl_options,
-              return_class = return_class,
-              api_key = api_key,
-              class = "symbol_spec",
-              ...)
+    structure(list(tiingo = tickers), class = "symbol_spec")
 }
 
 sym_fred <-
@@ -69,9 +69,6 @@ function(symbols, ...)
 print.symbol_spec <-
 function(x, ..., quote = FALSE)
 {
-    n <- sapply(x, class)
-    y <- unlist(x, recursive = FALSE, use.names = FALSE)
-    p <- setNames(list(y), n)
     print(p, ..., quote = quote)
     invisible(p)
 }
@@ -79,6 +76,24 @@ function(x, ..., quote = FALSE)
 c.symbol_spec <-
 function(...)
 {
-    specs <- unlist(list(...), recursive = FALSE, use.names = TRUE)
+    # Combine common sources from each argument
+    arglist <- pairlist(...)
+
+    specs <- list()
+    for (i in seq_along(arglist)) {
+        spec_i <- arglist[[i]]
+        spec_src <- names(spec_i)
+        spec_attr <- attributes(spec_i[[1]])
+
+        # Should we check attributes on specs for the same source?
+        specs[[spec_src]] <- c(specs[[spec_src]], spec_i[[1L]])
+        # c() drops attributes, so add them back
+        attributes(specs[[spec_src]]) <- spec_attr
+    }
+
+    # Warn if the same ticker is requested from more than one source?
+    # Probably, because the purpose is to return a set of data independent
+    # of the source
+
     structure(specs, class = "symbol_spec")
 }
