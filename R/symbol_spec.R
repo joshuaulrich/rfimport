@@ -22,8 +22,12 @@
 sym_yahoo <-
 function(symbols, ...)
 {
-    src_attr <- list(yahoo = list(curl_options = list()))
-    structure(symbols,
+    src_name <- "yahoo"
+    src_attr <- list(curl_options = list())
+
+    src_attr <- setNames(list(src_attr), src_name)
+    src_names <- rep(src_name, length(symbols))
+    structure(setNames(symbols, src_names),
               class = "symbol_spec",
               src_attr = src_attr)
 }
@@ -35,9 +39,14 @@ function(symbols, api_key = NULL, ...)
         # url to where they can get a free api key
         stop("you need an api key to import Tiingo data")
     }
-    src_attr <- list(tiingo = list(curl_options = list()),
+
+    src_name <- "tiingo"
+    src_attr <- list(curl_options = list(),
                      api_key = api_key)
-    structure(symbols,
+
+    src_attr <- setNames(list(src_attr), src_name)
+    src_names <- rep(src_name, length(symbols))
+    structure(setNames(symbols, src_names),
               class = "symbol_spec",
               src_attr = src_attr)
 }
@@ -45,8 +54,12 @@ function(symbols, api_key = NULL, ...)
 sym_fred <-
 function(symbols, ...)
 {
-    src_attr <- list(fred = list(curl_options = list()))
-    structure(symbols,
+    src_name <- "fred"
+    src_attr <- list(curl_options = list())
+
+    src_attr <- setNames(list(src_attr), src_name)
+    src_names <- rep(src_name, length(symbols))
+    structure(setNames(symbols, src_names),
               class = "symbol_spec",
               src_attr = src_attr)
 }
