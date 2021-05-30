@@ -117,3 +117,14 @@ function(...)
     }
     return(result)
 }
+
+print.symbol_spec <-
+function(x, ..., quote = FALSE)
+{
+    y <- x
+    attr(y, "src_attr") <- NULL
+    class(y) <- NULL
+
+    print(y, ..., quote = quote)
+    invisible(x)
+}
