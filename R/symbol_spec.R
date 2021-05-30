@@ -93,7 +93,8 @@ function(...)
 
         if (same_src && diff_attr) {
             warning("found different source attributes for ",
-                    names(src_attr_x), "\n  using ", src_attr_x)
+                    names(src_attr_x), "\n  using ", src_attr_x,
+                    call. = FALSE, immediate. = TRUE)
             new_attr <- src_attr_x
         } else {
             new_attr <- c(src_attr_x, src_attr_y)
