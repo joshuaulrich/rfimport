@@ -26,4 +26,5 @@ S3method(import_series, fred)
 S3method(c, symbol_spec)
 S3method(print, symbol_spec)
 
+S3method(c, multiple_ohlc)
 S3method(print, multiple_ohlc)

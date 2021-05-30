@@ -21,7 +21,7 @@
 import_ohlc.tiingo <-
 function(symbol_spec, ..., from = NULL, to = NULL)
 {
-    api_key <- attr(symbol_spec, "api_key")
+    api_key <- .get_src_attr(symbol_spec)[["api_key"]]
     if (is.null(api_key)) {
         stop("you need an api key to use Tiingo data")
     }

@@ -53,7 +53,23 @@ function(symbol_spec, ...)
 import_ohlc.symbol_spec <-
 function(symbol_spec, ...)
 {
-    NextMethod(object = symbol_spec)
+    symbols_by_source <- split(symbol_spec, names(symbol_spec))
+    src_attr <- .get_src_attr(symbol_spec)
+
+    for (sym in names(symbols_by_source)) {
+        method_function <- getS3method("import_ohlc", sym)
+
+        src_spec <- symbols_by_source[[sym]]
+        attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
+
+        if (exists("results")) {
+            results <- c(results, method_function(src_spec, ...))
+        } else {
+            results <- method_function(src_spec, ...)
+        }
+    }
+
+    return(results)
 }
 
 # A univariate series from one or more sources

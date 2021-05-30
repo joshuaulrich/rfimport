@@ -18,6 +18,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+c.multiple_ohlc <-
+function(...)
+{
+    # TODO: check for the same symbols in '...'
+    result <- unlist(list(...), recursive = FALSE, use.names = FALSE)
+    structure(result, class = "multiple_ohlc")
+}
+
 print.multiple_ohlc <-
 function(x, ..., n = 5)
 {
