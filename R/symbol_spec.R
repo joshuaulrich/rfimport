@@ -37,16 +37,16 @@ function(symbols,
 
 ### symbol_spec connection objects
 sym_yahoo <-
-function(symbols, ...)
+function(symbols, ..., curl_options = list())
 {
     src_name <- "yahoo"
-    src_attr <- list(curl_options = list())
+    src_attr <- list(curl_options = curl_options)
 
     create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
 sym_tiingo <-
-function(symbols, api_key = NULL, ...)
+function(symbols, ..., curl_options = list(), api_key = NULL)
 {
     if (is.null(api_key)) {
         # url to where they can get a free api key
@@ -54,17 +54,17 @@ function(symbols, api_key = NULL, ...)
     }
 
     src_name <- "tiingo"
-    src_attr <- list(curl_options = list(),
+    src_attr <- list(curl_options = curl_options,
                      api_key = api_key)
 
     create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
 sym_fred <-
-function(symbols, ...)
+function(symbols, ..., curl_options = list())
 {
     src_name <- "fred"
-    src_attr <- list(curl_options = list())
+    src_attr <- list(curl_options = curl_options)
 
     create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
