@@ -18,6 +18,23 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+### generic constructor for symbol_spec connection objects
+create_sym_spec <-
+function(symbols,
+         src_name = NULL,
+         src_attr = NULL)
+{
+    if (is.null(src_name)) {
+        stop("'src_name' cannot be NULL")
+    }
+
+    src_attr <- setNames(list(src_attr), src_name)
+    src_names <- rep(src_name, length(symbols))
+    structure(setNames(symbols, src_names),
+              class = "symbol_spec",
+              src_attr = src_attr)
+}
+
 ### symbol_spec connection objects
 sym_yahoo <-
 function(symbols, ...)
@@ -25,11 +42,7 @@ function(symbols, ...)
     src_name <- "yahoo"
     src_attr <- list(curl_options = list())
 
-    src_attr <- setNames(list(src_attr), src_name)
-    src_names <- rep(src_name, length(symbols))
-    structure(setNames(symbols, src_names),
-              class = "symbol_spec",
-              src_attr = src_attr)
+    create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
 sym_tiingo <-
@@ -44,11 +57,7 @@ function(symbols, api_key = NULL, ...)
     src_attr <- list(curl_options = list(),
                      api_key = api_key)
 
-    src_attr <- setNames(list(src_attr), src_name)
-    src_names <- rep(src_name, length(symbols))
-    structure(setNames(symbols, src_names),
-              class = "symbol_spec",
-              src_attr = src_attr)
+    create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
 sym_fred <-
@@ -57,11 +66,7 @@ function(symbols, ...)
     src_name <- "fred"
     src_attr <- list(curl_options = list())
 
-    src_attr <- setNames(list(src_attr), src_name)
-    src_names <- rep(src_name, length(symbols))
-    structure(setNames(symbols, src_names),
-              class = "symbol_spec",
-              src_attr = src_attr)
+    create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
 .get_src_attr <-
