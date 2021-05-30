@@ -22,12 +22,10 @@
 sym_yahoo <-
 function(symbols, ...)
 {
+    src_attr <- list(yahoo = list(curl_options = list()))
     structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              return_class = "xts",
-              curl_options = list(),
-              class = c("symbol_spec", "yahoo"))
+              class = "symbol_spec",
+              src_attr = src_attr)
 }
 
 sym_tiingo <-
@@ -37,34 +35,67 @@ function(symbols, api_key = NULL, ...)
         # url to where they can get a free api key
         stop("you need an api key to import Tiingo data")
     }
+    src_attr <- list(tiingo = list(curl_options = list()),
+                     api_key = api_key)
     structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              api_key = api_key,
-              return_class = "xts",
-              curl_options = list(),
-              class = c("symbol_spec", "tiingo"))
+              class = "symbol_spec",
+              src_attr = src_attr)
 }
 
 sym_fred <-
 function(symbols, ...)
 {
+    src_attr <- list(fred = list(curl_options = list()))
     structure(symbols,
-              #         url = "...",
-              #         adjust = TRUE,
-              return_class = "xts",
-              class = c("symbol_spec", "fred"))
+              class = "symbol_spec",
+              src_attr = src_attr)
+}
+
+.get_src_attr <-
+function(symbol_spec)
+{
+    # helper to avoid getting NULL by misspelling 'src_attr'
+    attr(symbol_spec, "src_attr")
+}
+
+.combine_src_attr <-
+function(...)
+{
+    new_attr <- src_attr_x <- NULL
+    objs <- list(...)
+
+    for (o in objs) {
+        src_attr_y <- .get_src_attr(o)
+
+        same_src <- identical(names(src_attr_x), names(src_attr_y))
+        diff_attr <- !isTRUE(all.equal(src_attr_x, src_attr_y))
+
+        if (same_src && diff_attr) {
+            warning("found different source attributes for ",
+                    names(src_attr_x), "\n  using ", src_attr_x)
+            new_attr <- src_attr_x
+        } else {
+            new_attr <- c(src_attr_x, src_attr_y)
+        }
+        src_attr_x <- src_attr_y
+    }
+    return(new_attr)
 }
 
 c.symbol_spec <-
 function(...)
 {
-    # I don't like this. It should always return the same type of object
-    # But otherwise I don't know how to have a list of specs to different
-    # sources.
-    objects <- list(...)
-    if (length(objects) > 1) {
-        result <- structure(list(...), class = "symbol_spec_list")
+    objs <- list(...)
+    if (length(objs) > 1) {
+        src_attr <- .combine_src_attr(...)
+
+        result <- NextMethod()
+        result <-
+            structure(result,
+                      class = "symbol_spec",
+                      src_attr = src_attr)
+    } else {
+        result <- objs[[1]]
     }
     return(result)
 }
