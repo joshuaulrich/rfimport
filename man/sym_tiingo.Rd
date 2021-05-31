@@ -27,6 +27,7 @@ Symbol specification for Tiingo
 
 \dontrun{
     tickers <- sym_tiingo(c("AAPL", "NFLX"), api_key = "*****")
+    ohlc <- import_ohlc(tickers)
 }
 
 }

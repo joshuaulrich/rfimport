@@ -54,6 +54,9 @@ function(symbols,
 #' @examples
 #'
 #' tickers <- sym_yahoo(c("AAPL", "NFLX"))
+#' \dontrun{
+#'     ohlc <- import_ohlc(tickers)
+#' }
 #'
 sym_yahoo <-
 function(symbols, ..., curl_options = list())
@@ -84,6 +87,7 @@ function(symbols, ..., curl_options = list())
 #'
 #' \dontrun{
 #'     tickers <- sym_tiingo(c("AAPL", "NFLX"), api_key = "*****")
+#'     ohlc <- import_ohlc(tickers)
 #' }
 #'
 sym_tiingo <-
@@ -118,7 +122,11 @@ function(symbols, ..., curl_options = list(), api_key = NULL)
 #' @keywords IO connection
 #' @examples
 #'
-#' series_symbols <- sym_fred("DGS10")
+#' series_symbols <- sym_fred(c("DGS10", "DGS5"))
+#'
+#' \dontrun{
+#'     treasury_rates <- import_series(series_symbols)
+#' }
 #'
 sym_fred <-
 function(symbols, ..., curl_options = list())

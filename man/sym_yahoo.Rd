@@ -24,6 +24,9 @@ Symbol specification for Yahoo Finance
 \examples{
 
 tickers <- sym_yahoo(c("AAPL", "NFLX"))
+\dontrun{
+    ohlc <- import_ohlc(tickers)
+}
 
 }
 \references{

@@ -23,7 +23,11 @@ Symbol specification for FRED
 }
 \examples{
 
-series_symbols <- sym_fred("DGS10")
+series_symbols <- sym_fred(c("DGS10", "DGS5"))
+
+\dontrun{
+    treasury_rates <- import_series(series_symbols)
+}
 
 }
 \references{
