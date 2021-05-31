@@ -7,8 +7,13 @@ export(import_ohlc,
 
 importFrom(quantmod,
     getSymbols)
+
 importFrom(utils,
-    capture.output)
+    capture.output,
+    getS3method)
+
+importFrom(stats,
+    setNames)
 
 import(methods, zoo, xts, TTR)
 
