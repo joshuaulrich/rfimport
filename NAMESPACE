@@ -1,5 +1,4 @@
 export(import_ohlc,
-       import_quote,
        import_series,
        sym_fred,
        sym_tiingo,
