@@ -62,3 +62,15 @@ function(x, ..., n = 5)
     }
     invisible(x)
 }
+
+head.multiple_ohlc <-
+function(x, n = 6, ...)
+{
+    lapply(x, function(.) head(., n = n))
+}
+
+tail.multiple_ohlc <-
+function(x, n = 6, ...)
+{
+    lapply(x, function(.) tail(., n = n))
+}

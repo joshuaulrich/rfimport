@@ -32,3 +32,5 @@ S3method(print, symbol_spec)
 
 S3method(c, multiple_ohlc)
 S3method(print, multiple_ohlc)
+S3method(head, multiple_ohlc)
+S3method(tail, multiple_ohlc)
