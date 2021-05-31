@@ -31,9 +31,6 @@ function(symbol_spec, ...)
 
     lenv <- as.list(env)
 
-    if (length(lenv) > 1) {
-        structure(as.list(env), class = "multiple_series")
-    } else {
-        lenv[[1L]]
-    }
+    result <- do.call("merge", lenv)
+    return(result)
 }
