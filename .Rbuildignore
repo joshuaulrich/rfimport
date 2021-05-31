@@ -1,4 +1,5 @@
 LICENSE
+Makefile
 ^.*\.Rproj$
 ^\.Rproj\.user$
 \.git
