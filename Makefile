@@ -49,9 +49,12 @@ $(PKG_INST_FILE): $(PKG_TARGZ)
 	@${R_HOME}/bin/R CMD INSTALL ${PKG_TARGZ} --no-byte-compile
 
 # Run R CMD check
-check: install
+check: docs install
 	@_R_CHECK_CRAN_INCOMING_=false \
 	${R_HOME}/bin/R CMD check ${PKG_TARGZ} --as-cran
+
+docs: ${PKG_R_FILES}
+	@${R_HOME}/bin/Rscript -e "roxygen2::roxygenize(roclets='rd')"
 
 # Build for CRAN
 #build-cran: $(PKG_TARGZ)
