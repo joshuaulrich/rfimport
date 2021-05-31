@@ -37,7 +37,23 @@ function(symbol_spec, ...)
     stop("not implemented")
 }
 
-# OHLC(VA) data from one or more sources
+#' Import OHLC(VA) data from one or more sources
+#'
+#' This function imports data that has columns with open, high, low, close,
+#' and possibly volume and/or adjusted close (if the data source returns it).
+#'
+#' @param symbol_spec A symbol specification object.
+#' @param \dots Additional parameters passed to methods.
+#'
+#' @return An object of class \code{multiple_ohlc}.
+#'
+#' @author Joshua Ulrich
+#' @keywords IO connection
+#' @examples
+#'
+#' tickers <- sym_yahoo(c("AAPL", "NFLX"))
+#' ohlc <- import_ohlc(tickers)
+#'
 import_ohlc <-
 function(symbol_spec, ...)
 {
