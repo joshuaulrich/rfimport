@@ -1,5 +1,6 @@
 export(import_ohlc,
        import_series,
+       make_xts_frame,
        sym_fred,
        sym_tiingo,
        sym_yahoo)
