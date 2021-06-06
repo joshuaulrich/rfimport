@@ -40,5 +40,7 @@ function(symbol_spec, ..., from = NULL, to = NULL)
     env <- new.env()
     getSymbols(syms, src = "yahoo", from = from, to = to, ...,
                periodicity = periodicity, env = env, curl_options = curl_opt)
-    structure(as.list(env), class = "multiple_ohlc")
+
+    env <- eapply(env, .adjust_colnames)
+    structure(env, class = "multiple_ohlc")
 }

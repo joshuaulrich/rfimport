@@ -18,6 +18,16 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+.adjust_colnames <-
+function(object, remove_prefix = TRUE)
+{
+    if (remove_prefix) {
+        pattern <- "^[^.]*\\."
+        colnames(object) <- gsub(pattern, "", colnames(object))
+    }
+    return(object)
+}
+
 # import intraday quotes
 import_quote <-
 function(symbol_spec, ...)

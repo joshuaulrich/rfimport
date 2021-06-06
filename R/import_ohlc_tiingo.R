@@ -38,5 +38,7 @@ function(symbol_spec, ..., from = NULL, to = NULL)
     env <- new.env()
     getSymbols(syms, src = "tiingo", from = from, to = to, ..., env = env,
                api.key = api_key)
-    structure(as.list(env), class = "multiple_ohlc")
+
+    env <- eapply(env, .adjust_colnames)
+    structure(env, class = "multiple_ohlc")
 }
