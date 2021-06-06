@@ -9,6 +9,8 @@ importFrom(quantmod,
 
 importFrom(utils,
     capture.output,
+    head,
+    tail,
     getS3method)
 
 importFrom(stats,
