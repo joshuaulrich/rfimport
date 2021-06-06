@@ -84,6 +84,9 @@ function(symbol_spec, ...)
         }
     }
 
+    symbol_names <- gsub("\\^", "", symbol_spec)
+    results <- results[symbol_names]
+
     return(results)
 }
 
@@ -126,6 +129,9 @@ function(symbol_spec, ...)
             results <- method_function(src_spec, ...)
         }
     }
+
+    symbol_names <- gsub("\\^", "", symbol_spec)
+    results <- results[, symbol_names]
 
     return(results)
 }
