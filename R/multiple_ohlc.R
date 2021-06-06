@@ -18,6 +18,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+`[.multiple_ohlc` <-
+function(x, i)
+{
+    .Class <- "list"
+    result <- NextMethod(.Generic)
+    structure(result, class = "multiple_ohlc")
+}
+
 c.multiple_ohlc <-
 function(...)
 {
