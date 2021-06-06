@@ -21,7 +21,6 @@
 `[.multiple_ohlc` <-
 function(x, i)
 {
-    .Class <- "list"
     result <- NextMethod(.Generic)
     structure(result, class = "multiple_ohlc")
 }
