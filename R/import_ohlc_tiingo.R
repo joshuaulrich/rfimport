@@ -21,7 +21,12 @@
 import_ohlc.tiingo <-
 function(symbol_spec, ..., from = NULL, to = NULL)
 {
-    api_key <- .get_src_attr(symbol_spec)[["api_key"]]
+    config_file <- "~/.R/quantmod-config.json"
+    if (file.exists(config_file)) {
+        api_key <- jsonlite::fromJSON(config_file)[["tiingo"]][["api_key"]]
+    } else {
+        api_key <- .get_src_attr(symbol_spec)[["api_key"]]
+    }
     if (is.null(api_key)) {
         stop("you need an api key to use Tiingo data")
     }

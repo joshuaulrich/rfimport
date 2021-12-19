@@ -93,7 +93,10 @@ function(symbols, ..., curl_options = list())
 sym_tiingo <-
 function(symbols, ..., curl_options = list(), api_key = NULL)
 {
-    if (is.null(api_key)) {
+    config_file <- "~/.R/quantmod-config.json"
+    if (file.exists(config_file)) {
+        api_key <- jsonlite::fromJSON(config_file)[["tiingo"]][["api_key"]]
+    } else if (is.null(api_key)) {
         # url to where they can get a free api key
         stop("you need an api key to import Tiingo data")
     }
