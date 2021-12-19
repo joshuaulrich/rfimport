@@ -18,6 +18,37 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#' Import data from Tiingo
+#' 
+#' Imports data from Tiingo for each symbol in \code{symbol_spec}. This method
+#' should not be called directly. Use \code{import_ohlc} with one or more
+#' Tiingo \code{symbol_spec}.
+#' 
+#' @aliases import_ohlc.tiingo import_ohlc_tiingo
+#' 
+#' @param symbol_spec A \code{symbol_spec} object, with one element for each
+#'    symbol that will be imported.
+#' @param \dots Arguments passed to other functions (not currently used).
+#' @param from A date/time that specifies the first possible date of the
+#'    imported data (default: \code{Sys.Date() - 365}).
+#' @param to A date/time that specifies the last possible date of the
+#'    imported data (default: \code{Sys.Date()}).
+#' 
+#' @return A \code{multiple_ohlc} object, with one element for each
+#'    \code{symbol_spec}.
+#' 
+#' @keywords IO connection
+#' 
+#' @examples
+#' 
+#'  ### Note: you must have a working internet
+#'  ### connection for these examples to work!
+#'  if (interactive()) {
+#'      sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
+#'      tiingo_data <- import_ohlc(sym_spec)
+#'  }
+#' 
+
 import_ohlc.tiingo <-
 function(symbol_spec, ..., from = NULL, to = NULL)
 {
