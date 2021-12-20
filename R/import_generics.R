@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-.adjust_colnames <-
+.remove_colname_symbol <-
 function(object, remove_prefix = TRUE)
 {
     if (remove_prefix) {
