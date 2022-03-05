@@ -1,4 +1,4 @@
-suppressMessages(library(fimvisr))
+suppressMessages(library(rfimport))
 
 sym1 <- sym_yahoo(c("AAPL", "NFLX"))
 expect_inherits(sym1, "symbol_spec")

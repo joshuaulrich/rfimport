@@ -1,6 +1,6 @@
 # vim: tabstop=4 shiftwidth=4 expandtab
 #
-#  fimvisr: Financial Market Data Import & Visualization
+#  rfimport: Import Financial Market Data
 #
 #  Copyright (C) 2020 Joshua M. Ulrich
 #

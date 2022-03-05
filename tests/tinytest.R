@@ -1,5 +1,5 @@
 # run package unit tests
 if (requireNamespace("tinytest", quietly = TRUE)) {
-    tinytest::test_package("fimvisr")
+    tinytest::test_package("rfimport")
 }
 

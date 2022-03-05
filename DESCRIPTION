@@ -1,6 +1,6 @@
-Package: fimvisr
+Package: rfimport
 Type: Package
-Title: Financial Market Data Import & Visualization
+Title: Import Financial Market Data
 Version: 0.2.0
 Authors@R: c(
   person(given=c("Jeffrey","A."), family="Ryan", role=c("aut","cph")),
