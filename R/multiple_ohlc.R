@@ -36,7 +36,8 @@ function(...)
 print.multiple_ohlc <-
 function(x, ..., n = 5)
 {
-    for (y in x) {
+    for (nm in names(x)) {
+        y <- x[[nm]]
         nry <- NROW(y)
         ncy <- NCOL(y)
         ibeg <- seq.int(1L, n, 1L)
@@ -64,6 +65,7 @@ function(x, ..., n = 5)
             out <- capture.output(print(data.frame(y)))
         }
 
+        cat(nm, "\n")
         write(out, "")
         cat("\n")
     }
