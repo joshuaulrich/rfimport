@@ -16,6 +16,9 @@ importFrom(utils,
 importFrom(stats,
     setNames)
 
+importFrom(jsonlite,
+    fromJSON)
+
 import(methods, zoo, xts, TTR)
 
 S3method(import_ohlc, symbol_spec)
