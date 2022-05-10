@@ -49,7 +49,7 @@
 #'  }
 #' 
 
-import_ohlc.tiingo <-
+import_multi_ohlc.tiingo <-
 function(symbol_spec, ..., from = NULL, to = NULL)
 {
     config_file <- "~/.R/quantmod-config.json"

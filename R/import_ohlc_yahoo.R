@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import_ohlc.yahoo <-
+import_multi_ohlc.yahoo <-
 function(symbol_spec, ..., from = NULL, to = NULL)
 {
     if (is.null(from)) {

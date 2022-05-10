@@ -73,7 +73,60 @@ function(symbol_spec, ...)
 #' @examples
 #'
 #' tickers <- sym_yahoo(c("AAPL", "NFLX"))
-#' ohlc <- import_ohlc(tickers)
+#' ohlc <- import_multi_ohlc(tickers)
+#'
+import_multi_ohlc <-
+function(symbol_spec, ...)
+{
+    UseMethod("import_multi_ohlc", symbol_spec)
+}
+
+import_multi_ohlc.default <-
+function(symbol_spec, ...)
+{
+    stop("not implemented")
+}
+
+import_multi_ohlc.symbol_spec <-
+function(symbol_spec, ...)
+{
+    symbols_by_source <- split(symbol_spec, names(symbol_spec))
+
+    for (sym in names(symbols_by_source)) {
+        method_function <- getS3method("import_multi_ohlc", sym)
+
+        src_spec <- symbols_by_source[[sym]]
+        attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
+
+        if (exists("results")) {
+            results <- c(results, method_function(src_spec, ...))
+        } else {
+            results <- method_function(src_spec, ...)
+        }
+    }
+
+    symbol_names <- gsub("\\^", "", symbol_spec)
+    results <- results[symbol_names]
+
+    return(results)
+}
+
+#' Import a single OHLC(VA) series as an xts object
+#'
+#' This function imports data that has columns with open, high, low, close,
+#' and possibly volume and/or adjusted close (if the data source returns it).
+#'
+#' @param symbol_spec A symbol specification object with one symbol.
+#' @param \dots Additional parameters passed to methods.
+#'
+#' @return An object of class \code{xts}.
+#'
+#' @author Joshua Ulrich
+#' @keywords IO connection
+#' @examples
+#'
+#' ticker <- sym_yahoo("AAPL")
+#' ohlc <- import_ohlc(ticker)
 #'
 import_ohlc <-
 function(symbol_spec, ...)
@@ -90,23 +143,16 @@ function(symbol_spec, ...)
 import_ohlc.symbol_spec <-
 function(symbol_spec, ...)
 {
-    symbols_by_source <- split(symbol_spec, names(symbol_spec))
-
-    for (sym in names(symbols_by_source)) {
-        method_function <- getS3method("import_ohlc", sym)
-
-        src_spec <- symbols_by_source[[sym]]
-        attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
-
-        if (exists("results")) {
-            results <- c(results, method_function(src_spec, ...))
-        } else {
-            results <- method_function(src_spec, ...)
-        }
+    if (length(symbol_spec) > 1L) {
+        stop("import_ohlc() only supports a single symbol.")
     }
 
-    symbol_names <- gsub("\\^", "", symbol_spec)
-    results <- results[symbol_names]
+    method_function <- getS3method("import_multi_ohlc", names(symbol_spec))
+
+    src_spec <- symbol_spec
+    attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)
+
+    results <- method_function(src_spec, ...)[[1L]]
 
     return(results)
 }

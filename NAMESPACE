@@ -1,4 +1,5 @@
 export(import_ohlc,
+       import_multi_ohlc,
        import_series,
        sym_fred,
        sym_tiingo,
@@ -22,8 +23,9 @@ importFrom(jsonlite,
 import(methods, zoo, xts, TTR)
 
 S3method(import_ohlc, symbol_spec)
-S3method(import_ohlc, tiingo)
-S3method(import_ohlc, yahoo)
+S3method(import_multi_ohlc, symbol_spec)
+S3method(import_multi_ohlc, tiingo)
+S3method(import_multi_ohlc, yahoo)
 
 S3method(import_quote, symbol_spec)
 #S3method(import_quote, tiingo)
