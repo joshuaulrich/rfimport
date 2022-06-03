@@ -201,3 +201,17 @@ function(x, ..., quote = FALSE)
     print(y, ..., quote = quote)
     invisible(x)
 }
+
+str.symbol_spec <-
+function(object, ...)
+{
+    src_attr_names <- names(attr(object, "src_attr"))
+
+    for (nm in src_attr_names) {
+        this_api_key <- attr(object, "src_attr")[[nm]][["api_key"]]
+        if (!is.null(this_api_key)) {
+            attr(object, "src_attr")[[nm]][["api_key"]] <- "<redacted>"
+        }
+    }
+    NextMethod(.Generic)
+}
