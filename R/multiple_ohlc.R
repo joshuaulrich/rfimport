@@ -29,7 +29,7 @@ c.multiple_ohlc <-
 function(...)
 {
     # TODO: check for the same symbols in '...'
-    result <- unlist(list(...), recursive = FALSE, use.names = FALSE)
+    result <- unlist(list(...), recursive = FALSE, use.names = TRUE)
     structure(result, class = "multiple_ohlc")
 }
 
