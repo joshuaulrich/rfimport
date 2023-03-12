@@ -1,6 +1,7 @@
 export(import_ohlc,
        import_multi_ohlc,
        import_series,
+       import_collection,
        sym_fred,
        sym_tiingo,
        sym_yahoo)
@@ -33,6 +34,8 @@ S3method(import_quote, symbol_spec)
 
 S3method(import_series, symbol_spec)
 S3method(import_series, fred)
+
+S3method(import_collection, symbol_spec)
 
 S3method(c, symbol_spec)
 S3method(print, symbol_spec)
