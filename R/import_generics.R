@@ -64,6 +64,7 @@ function(symbol_spec, ...)
 #' and possibly volume and/or adjusted close (if the data source returns it).
 #'
 #' @param symbol_spec A symbol specification object.
+#' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Additional parameters passed to methods.
 #'
 #' @return An object of class \code{multiple_ohlc}.
@@ -76,19 +77,25 @@ function(symbol_spec, ...)
 #' ohlc <- import_multi_ohlc(tickers)
 #'
 import_multi_ohlc <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     UseMethod("import_multi_ohlc", symbol_spec)
 }
 
 import_multi_ohlc.default <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     stop("not implemented")
 }
 
 import_multi_ohlc.symbol_spec <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     symbols_by_source <- split(symbol_spec, names(symbol_spec))
 
@@ -99,9 +106,9 @@ function(symbol_spec, ...)
         attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
 
         if (exists("results")) {
-            results <- c(results, method_function(src_spec, ...))
+            results <- c(results, method_function(src_spec, dates, ...))
         } else {
-            results <- method_function(src_spec, ...)
+            results <- method_function(src_spec, dates, ...)
         }
     }
 
@@ -117,6 +124,7 @@ function(symbol_spec, ...)
 #' and possibly volume and/or adjusted close (if the data source returns it).
 #'
 #' @param symbol_spec A symbol specification object with one symbol.
+#' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Additional parameters passed to methods.
 #'
 #' @return An object of class \code{xts}.
@@ -129,19 +137,25 @@ function(symbol_spec, ...)
 #' ohlc <- import_ohlc(ticker)
 #'
 import_ohlc <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     UseMethod("import_ohlc", symbol_spec)
 }
 
 import_ohlc.default <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     stop("not implemented")
 }
 
 import_ohlc.symbol_spec <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     if (length(symbol_spec) > 1L) {
         stop("import_ohlc() only supports a single symbol.")
@@ -152,7 +166,7 @@ function(symbol_spec, ...)
     src_spec <- symbol_spec
     attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)
 
-    results <- method_function(src_spec, ...)[[1L]]
+    results <- method_function(src_spec, dates, ...)[[1L]]
 
     return(results)
 }
@@ -162,6 +176,7 @@ function(symbol_spec, ...)
 #' This function imports data where each column represents a different series.
 #'
 #' @param symbol_spec A symbol specification object.
+#' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Additional parameters passed to methods.
 #'
 #' @return An object of class \code{xts} with one column per series.
@@ -174,13 +189,17 @@ function(symbol_spec, ...)
 #' treasury_rates <- import_series(series_symbols)
 #'
 import_series <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     UseMethod("import_series", symbol_spec)
 }
 
 import_series.symbol_spec <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     symbols_by_source <- split(symbol_spec, names(symbol_spec))
 
@@ -191,9 +210,9 @@ function(symbol_spec, ...)
         attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
 
         if (exists("results")) {
-            results <- c(results, method_function(src_spec, ...))
+            results <- c(results, method_function(src_spec, dates, ...))
         } else {
-            results <- method_function(src_spec, ...)
+            results <- method_function(src_spec, dates, ...)
         }
     }
 

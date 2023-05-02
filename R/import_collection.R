@@ -24,6 +24,7 @@
 #' and possibly volume and/or adjusted close (if the data source returns it).
 #'
 #' @param symbol_spec A symbol specification object.
+#' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Additional parameters passed to methods.
 #'
 #' @return An object of class \code{list}.
@@ -36,19 +37,25 @@
 #' collection <- import_collection(tickers)
 #'
 import_collection <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     UseMethod("import_collection", symbol_spec)
 }
 
 import_collection.default <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     stop("not implemented")
 }
 
 import_collection.symbol_spec <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     symbols_by_source <- split(symbol_spec, names(symbol_spec))
 
@@ -59,9 +66,9 @@ function(symbol_spec, ...)
         attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
 
         if (exists("results")) {
-            results <- c(results, method_function(src_spec, ...))
+            results <- c(results, method_function(src_spec, dates, ...))
         } else {
-            results <- method_function(src_spec, ...)
+            results <- method_function(src_spec, dates, ...)
         }
     }
 
