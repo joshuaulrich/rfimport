@@ -28,11 +28,8 @@
 #' 
 #' @param symbol_spec A \code{symbol_spec} object, with one element for each
 #'    symbol that will be imported.
+#' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Arguments passed to other functions (not currently used).
-#' @param from A date/time that specifies the first possible date of the
-#'    imported data (default: \code{Sys.Date() - 365}).
-#' @param to A date/time that specifies the last possible date of the
-#'    imported data (default: \code{Sys.Date()}).
 #' 
 #' @return A \code{multiple_ohlc} object, with one element for each
 #'    \code{symbol_spec}.
@@ -50,7 +47,9 @@
 #' 
 
 import_multi_ohlc.tiingo <-
-function(symbol_spec, ..., from = NULL, to = NULL)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     config_file <- "~/.R/quantmod-config.json"
     if (file.exists(config_file)) {
@@ -61,19 +60,15 @@ function(symbol_spec, ..., from = NULL, to = NULL)
     if (is.null(api_key)) {
         stop("you need an api key to use Tiingo data")
     }
-    if (is.null(from)) {
-        from <- Sys.Date() - 365
-    }
-    if (is.null(to)) {
-        to <- Sys.Date()
-    }
+
+    from_to <- .api$parse_iso8601_interval(dates)
 
     # drop attributes
     syms <- .drop_attributes(symbol_spec)
 
     env <- new.env()
-    getSymbols(syms, src = "tiingo", from = from, to = to, ..., env = env,
-               api.key = api_key)
+    getSymbols(syms, src = "tiingo", from = from_to$start, to = from_to$end,
+               ..., env = env, api.key = api_key)
 
     env <- eapply(env, .remove_colname_symbol)
     structure(env, class = "multiple_ohlc")

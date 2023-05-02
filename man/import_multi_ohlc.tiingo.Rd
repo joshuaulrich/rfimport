@@ -6,19 +6,15 @@
 \alias{import_ohlc_tiingo}
 \title{Import data from Tiingo}
 \usage{
-\method{import_multi_ohlc}{tiingo}(symbol_spec, ..., from = NULL, to = NULL)
+\method{import_multi_ohlc}{tiingo}(symbol_spec, dates = NULL, ...)
 }
 \arguments{
 \item{symbol_spec}{A \code{symbol_spec} object, with one element for each
 symbol that will be imported.}
 
+\item{dates}{An ISO-8601 string specifying the start and/or end dates.}
+
 \item{\dots}{Arguments passed to other functions (not currently used).}
-
-\item{from}{A date/time that specifies the first possible date of the
-imported data (default: \code{Sys.Date() - 365}).}
-
-\item{to}{A date/time that specifies the last possible date of the
-imported data (default: \code{Sys.Date()}).}
 }
 \value{
 A \code{multiple_ohlc} object, with one element for each

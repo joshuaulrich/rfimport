@@ -19,7 +19,9 @@
 #
 
 import_series.fred <-
-function(symbol_spec, ...)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
     # drop attributes
     syms <- .drop_attributes(symbol_spec)

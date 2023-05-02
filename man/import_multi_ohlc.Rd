@@ -4,10 +4,12 @@
 \alias{import_multi_ohlc}
 \title{Import OHLC(VA) data from one or more sources}
 \usage{
-import_multi_ohlc(symbol_spec, ...)
+import_multi_ohlc(symbol_spec, dates = NULL, ...)
 }
 \arguments{
 \item{symbol_spec}{A symbol specification object.}
+
+\item{dates}{An ISO-8601 string specifying the start and/or end dates.}
 
 \item{\dots}{Additional parameters passed to methods.}
 }

@@ -4,10 +4,12 @@
 \alias{import_ohlc}
 \title{Import a single OHLC(VA) series as an xts object}
 \usage{
-import_ohlc(symbol_spec, ...)
+import_ohlc(symbol_spec, dates = NULL, ...)
 }
 \arguments{
 \item{symbol_spec}{A symbol specification object with one symbol.}
+
+\item{dates}{An ISO-8601 string specifying the start and/or end dates.}
 
 \item{\dots}{Additional parameters passed to methods.}
 }

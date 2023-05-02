@@ -4,10 +4,12 @@
 \alias{import_series}
 \title{Import univariate series from one or more sources}
 \usage{
-import_series(symbol_spec, ...)
+import_series(symbol_spec, dates = NULL, ...)
 }
 \arguments{
 \item{symbol_spec}{A symbol specification object.}
+
+\item{dates}{An ISO-8601 string specifying the start and/or end dates.}
 
 \item{\dots}{Additional parameters passed to methods.}
 }

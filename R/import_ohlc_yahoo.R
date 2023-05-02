@@ -19,14 +19,11 @@
 #
 
 import_multi_ohlc.yahoo <-
-function(symbol_spec, ..., from = NULL, to = NULL)
+function(symbol_spec,
+         dates = NULL,
+         ...)
 {
-    if (is.null(from)) {
-        from <- Sys.Date() - 365
-    }
-    if (is.null(to)) {
-        to <- Sys.Date()
-    }
+    from_to <- .api$parse_iso8601_interval(dates)
 
     # drop attributes
     syms <- .drop_attributes(symbol_spec)
@@ -38,7 +35,7 @@ function(symbol_spec, ..., from = NULL, to = NULL)
     }
 
     env <- new.env()
-    getSymbols(syms, src = "yahoo", from = from, to = to, ...,
+    getSymbols(syms, src = "yahoo", from = from_to$start, to = from_to$end, ...,
                periodicity = periodicity, env = env, curl_options = curl_opt)
 
     env <- eapply(env, .remove_colname_symbol)
