@@ -19,16 +19,17 @@ R_LIB ?= $(shell Rscript -e 'cat(.libPaths()[1L])')
 PKG_INST_FILE = $(R_LIB)/${PKG_NAME}/DESCRIPTION
 
 PKG_R_FILES := $(wildcard ${PKG_PATH}/R/*.R)
+PKG_RD_FILES := $(wildcard ${PKG_PATH}/man/*.Rd)
 PKG_SRC_FILES := $(wildcard ${PKG_PATH}/src/*)
-PKG_ALL_FILES := ${PKG_PATH}/.Rbuildignore ${PKG_PATH}/DESCRIPTION \
-  ${PKG_PATH}/NAMESPACE $(PKG_R_FILES) $(PKG_SRC_FILES)
+PKG_ALL_FILES := ${PKG_PATH}/DESCRIPTION ${PKG_PATH}/NAMESPACE ${PKG_PATH}/.Rbuildignore \
+		 $(PKG_R_FILES) $(PKG_RD_FILES) $(PKG_SRC_FILES) \
 
 UNIT_TEST_SUITE = ${PKG_PATH}/tests/tinytest.R
-UNIT_TEST_FILES = $(wildcard ${PKG_PATH}/inst/unitTests/runit*.R)
+UNIT_TEST_FILES = $(wildcard ${PKG_PATH}/inst/tinytest/test-*.R)
 
 BENCHMARK_FILE = ${PKG_PATH}/inst/benchmarks/benchmark.subset.R
 
-.PHONY: build install check tests test
+.PHONY: build install check tests cran docs
 
 all: check #benchmark
 
@@ -51,11 +52,19 @@ $(PKG_INST_FILE): $(PKG_TARGZ)
 # Run R CMD check
 check: docs install
 	@_R_CHECK_CRAN_INCOMING_=false \
-	${R_HOME}/bin/R CMD check ${PKG_TARGZ} --as-cran
+	_MY_TINYTEST_VERBOSE_=1 _MY_TINYTEST_COLOR_=FALSE \
+	${R_HOME}/bin/R CMD check ${PKG_TARGZ} --no-vignettes
 
 docs: ${PKG_R_FILES}
 	@${R_HOME}/bin/Rscript -e "roxygen2::roxygenize(roclets='rd')"
 
+# Check for CRAN
+cran:
+	@${R_HOME}/bin/R CMD build ${PKG_PATH} && \
+	_MY_TINYTEST_VERBOSE_=1 _MY_TINYTEST_COLOR_=FALSE \
+	_R_CHECK_CRAN_INCOMING_=false ${R_HOME}/bin/R CMD check ${PKG_TARGZ} --as-cran
+
 # Run unit test suite
-tests: install
-	@${R_HOME}/bin/Rscript ${UNIT_TEST_SUITE}
+tests: install ${UNIT_TEST_FILES}
+	@_MY_TINYTEST_VERBOSE_=2 _MY_TINYTEST_COLOR_=TRUE \
+	${R_HOME}/bin/Rscript ${UNIT_TEST_SUITE}
