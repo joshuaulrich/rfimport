@@ -54,6 +54,7 @@ local({
         }
 
         period <- trimws(period)[1L]
+        period <- tolower(period)
 
         if (grepl("^[[:digit:]]", period)) {
             # starts with a digit; may or may not have a space
@@ -71,19 +72,40 @@ local({
             unit <- period
         }
 
+        # TODO: better errors for 'm' and 'mi'
+
         # special cases and abbreviations
         unit <-
             switch(unit,
                    ns = "nanoseconds",
                    us = "microseconds",
                    ms = "milliseconds",
+
                    secs = "seconds",
                    mins = "minutes",
                    hourly = "hours",
+                   hrs = "hours",
+                   hr = "hours",
+
                    daily = "days",
+
+                   weekly = "weeks",
+                   wks = "weeks",
+                   wk = "weeks",
+
                    monthly = "months",
+                   mons = "months",
+                   mos = "months",
+
                    quarterly = "quarters",
+                   qtrs = "quarters",
+                   qtr = "quarters",
+
+                   annual = "years",
+                   annually = "years",
                    yearly = "years",
+                   yrs = "years",
+                   yr = "years",
                    unit)
 
         valid_units <-
