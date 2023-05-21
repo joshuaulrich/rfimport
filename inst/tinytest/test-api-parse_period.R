@@ -257,3 +257,7 @@ ly_cases <-
        "yearly"    = make_case(1, "years"))
 
 run_test_cases(ly_cases)
+
+# Errors for 'm', 'mi'
+expect_error(parse_period("m"), pattern = "'m' is ambiguous")
+expect_error(parse_period("mi"), pattern = "'mi' is ambiguous")

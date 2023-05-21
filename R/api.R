@@ -53,6 +53,24 @@ local({
             return(NULL)
         }
 
+        valid_units <-
+            c("ticks",
+              "nanoseconds",
+              "microseconds",
+              "milliseconds",
+              "seconds",
+              "minutes",
+              "hours",
+              "days",
+              "weeks",
+              "months",
+              "quarters",
+              "years")
+
+        period_error_msg <-
+            paste0("\nperiod units should be one of:\n    ",
+                   paste(valid_units, collapse = ", "))
+
         period <- trimws(period)[1L]
         period <- tolower(period)
 
@@ -65,14 +83,23 @@ local({
 
             unit <- gsub(pattern, "\\2", period)
             if (nchar(unit) < 1) {
-                stop("could not determine units of period (", period, ")")
+                stop("could not parse units portion of ", sQuote(period),
+                     period_error_msg)
             }
         } else {
             n <- 1
             unit <- period
         }
 
-        # TODO: better errors for 'm' and 'mi'
+        # special error for units of 'm' or 'mi'
+        if (identical("m", unit)) {
+            stop("'m' is ambiguous and could be 'microseconds', 'milliseconds',",
+                 "'minutes', or 'months')", period_error_msg)
+        }
+        if (identical("mi", unit)) {
+            stop("'mi' is ambiguous and could be 'microseconds', 'milliseconds',",
+                 "or 'minutes')", period_error_msg)
+        }
 
         # special cases and abbreviations
         unit <-
@@ -108,24 +135,10 @@ local({
                    yr = "years",
                    unit)
 
-        valid_units <-
-            c("ticks",
-              "nanoseconds",
-              "microseconds",
-              "milliseconds",
-              "seconds",
-              "minutes",
-              "hours",
-              "days",
-              "weeks",
-              "months",
-              "quarters",
-              "years")
-
         unit_n <- pmatch(unit, valid_units, 0)
         if (unit_n < 1) {
-            stop("\nperiod units should be one of:\n    ",
-                 paste(valid_units, collapse = ", "))
+            stop("could not determine units of period ", sQuote(period),
+                period_error_msg)
         }
         std_unit <- valid_units[unit_n]
 
