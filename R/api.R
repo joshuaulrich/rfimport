@@ -46,4 +46,74 @@ local({
         return(result)
     }
 
+    parse_period <-
+    function(period = NULL)
+    {
+        if (is.null(period)) {
+            return(NULL)
+        }
+
+        period <- trimws(period)[1L]
+
+        if (grepl("^[[:digit:]]", period)) {
+            # starts with a digit; may or may not have a space
+            pattern <- "^([[:digit:]]+)[[:space:]]*([[:alpha:]]+)*$"
+
+            n <- gsub(pattern, "\\1", period)
+            n <- as.numeric(n)
+
+            unit <- gsub(pattern, "\\2", period)
+            if (nchar(unit) < 1) {
+                stop("could not determine units of period (", period, ")")
+            }
+        } else {
+            n <- 1
+            unit <- period
+        }
+
+        # special cases and abbreviations
+        unit <-
+            switch(unit,
+                   ns = "nanoseconds",
+                   us = "microseconds",
+                   ms = "milliseconds",
+                   secs = "seconds",
+                   mins = "minutes",
+                   hourly = "hours",
+                   daily = "days",
+                   monthly = "months",
+                   quarterly = "quarters",
+                   yearly = "years",
+                   unit)
+
+        valid_units <-
+            c("ticks",
+              "nanoseconds",
+              "microseconds",
+              "milliseconds",
+              "seconds",
+              "minutes",
+              "hours",
+              "days",
+              "weeks",
+              "months",
+              "quarters",
+              "years")
+
+        unit_n <- pmatch(unit, valid_units, 0)
+        if (unit_n < 1) {
+            stop("\nperiod units should be one of:\n    ",
+                 paste(valid_units, collapse = ", "))
+        }
+        std_unit <- valid_units[unit_n]
+
+        list(n = n, units = std_unit)
+    }
+
+    match_periodicity <-
+    function(periodicity, values)
+    {
+        value <- parse_period(periodicity)
+    }
+
 }, envir = .api)
