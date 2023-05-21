@@ -10,6 +10,10 @@ function(test_cases)
         case <- test_cases[[case_name]]
         p <- parse_period(case_name)
         expect_identical(p, case, info = case_name)
+
+        CASE_NAME <- toupper(case_name)
+        P <- parse_period(CASE_NAME)
+        expect_identical(p, case, info = CASE_NAME)
     }
     invisible(NULL)
 }
@@ -233,19 +237,6 @@ run_test_cases(year_cases)
 
 ###########################################################################
 # Special cases
-#
-# * years: annual, annually, yr, yrs
-# * quarters: qtr, qtrs
-# * weeks: wk, wks
-# * hours: hr, hrs
-# * minutes: mins
-# * seconds: secs
-#
-# TODO:
-#
-# * remove case sensitivity
-# * better errors for 'm', 'mi'
-#
 
 # "ly" suffixes
 ly_cases <-
