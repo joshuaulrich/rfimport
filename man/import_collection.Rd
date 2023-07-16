@@ -17,13 +17,15 @@ import_collection(symbol_spec, dates = NULL, ...)
 An object of class \code{list}.
 }
 \description{
-This function imports data that has columns with open, high, low, close,
-and possibly volume and/or adjusted close (if the data source returns it).
+This function imports multiple data series from one or more sources. Each
+series may have different column names.
 }
 \examples{
 
-tickers <- sym_yahoo(c("AAPL", "NFLX"))
-collection <- import_collection(tickers)
+\dontrun{
+series_symbols <- sym_fred(c("DGS10", "DGS5"))
+collection <- import_collection(series_symbols)
+}
 
 }
 \author{
