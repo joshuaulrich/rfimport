@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import_multi_ohlc.yahoo <-
+import_ohlc_collection.yahoo <-
 function(symbol_spec,
          dates = NULL,
          ...)
@@ -39,5 +39,5 @@ function(symbol_spec,
                periodicity = periodicity, env = env, curl_options = curl_opt)
 
     env <- eapply(env, .remove_colname_symbol)
-    structure(env, class = "multiple_ohlc")
+    structure(env, class = "ohlc_collection")
 }

@@ -1,5 +1,5 @@
 export(import_ohlc,
-       import_multi_ohlc,
+       import_ohlc_collection,
        import_series,
        import_collection,
        sym_fred,
@@ -24,9 +24,9 @@ importFrom(jsonlite,
 import(methods, zoo, xts, TTR)
 
 S3method(import_ohlc, symbol_spec)
-S3method(import_multi_ohlc, symbol_spec)
-S3method(import_multi_ohlc, tiingo)
-S3method(import_multi_ohlc, yahoo)
+S3method(import_ohlc_collection, symbol_spec)
+S3method(import_ohlc_collection, tiingo)
+S3method(import_ohlc_collection, yahoo)
 
 S3method(import_quote, symbol_spec)
 #S3method(import_quote, tiingo)
@@ -41,8 +41,8 @@ S3method(c, symbol_spec)
 S3method(print, symbol_spec)
 S3method(str, symbol_spec)
 
-S3method(`[`, multiple_ohlc)
-S3method(c, multiple_ohlc)
-S3method(print, multiple_ohlc)
-S3method(head, multiple_ohlc)
-S3method(tail, multiple_ohlc)
+S3method(`[`, ohlc_collection)
+S3method(c, ohlc_collection)
+S3method(print, ohlc_collection)
+S3method(head, ohlc_collection)
+S3method(tail, ohlc_collection)

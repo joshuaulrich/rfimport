@@ -67,24 +67,24 @@ function(symbol_spec, ...)
 #' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Additional parameters passed to methods.
 #'
-#' @return An object of class \code{multiple_ohlc}.
+#' @return An object of class \code{ohlc_collection}.
 #'
 #' @author Joshua Ulrich
 #' @keywords IO connection
 #' @examples
 #'
 #' tickers <- sym_yahoo(c("AAPL", "NFLX"))
-#' ohlc <- import_multi_ohlc(tickers)
+#' ohlc <- import_ohlc_collection(tickers)
 #'
-import_multi_ohlc <-
+import_ohlc_collection <-
 function(symbol_spec,
          dates = NULL,
          ...)
 {
-    UseMethod("import_multi_ohlc", symbol_spec)
+    UseMethod("import_ohlc_collection", symbol_spec)
 }
 
-import_multi_ohlc.default <-
+import_ohlc_collection.default <-
 function(symbol_spec,
          dates = NULL,
          ...)
@@ -92,7 +92,7 @@ function(symbol_spec,
     stop("not implemented")
 }
 
-import_multi_ohlc.symbol_spec <-
+import_ohlc_collection.symbol_spec <-
 function(symbol_spec,
          dates = NULL,
          ...)
@@ -100,7 +100,7 @@ function(symbol_spec,
     symbols_by_source <- split(symbol_spec, names(symbol_spec))
 
     for (sym in names(symbols_by_source)) {
-        method_function <- getS3method("import_multi_ohlc", sym)
+        method_function <- getS3method("import_ohlc_collection", sym)
 
         src_spec <- symbols_by_source[[sym]]
         attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
@@ -161,7 +161,7 @@ function(symbol_spec,
         stop("import_ohlc() only supports a single symbol.")
     }
 
-    method_function <- getS3method("import_multi_ohlc", names(symbol_spec))
+    method_function <- getS3method("import_ohlc_collection", names(symbol_spec))
 
     src_spec <- symbol_spec
     attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)

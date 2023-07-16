@@ -18,22 +18,22 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-`[.multiple_ohlc` <-
+`[.ohlc_collection` <-
 function(x, i)
 {
     result <- NextMethod(.Generic)
-    structure(result, class = "multiple_ohlc")
+    structure(result, class = "ohlc_collection")
 }
 
-c.multiple_ohlc <-
+c.ohlc_collection <-
 function(...)
 {
     # TODO: check for the same symbols in '...'
     result <- unlist(list(...), recursive = FALSE, use.names = TRUE)
-    structure(result, class = "multiple_ohlc")
+    structure(result, class = "ohlc_collection")
 }
 
-print.multiple_ohlc <-
+print.ohlc_collection <-
 function(x, ..., n = 5)
 {
     for (nm in names(x)) {
@@ -72,13 +72,13 @@ function(x, ..., n = 5)
     invisible(x)
 }
 
-head.multiple_ohlc <-
+head.ohlc_collection <-
 function(x, n = 6, ...)
 {
     lapply(x, function(.) head(., n = n))
 }
 
-tail.multiple_ohlc <-
+tail.ohlc_collection <-
 function(x, n = 6, ...)
 {
     lapply(x, function(.) tail(., n = n))

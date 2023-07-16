@@ -24,14 +24,14 @@
 #' should not be called directly. Use \code{import_ohlc} with one or more
 #' Tiingo \code{symbol_spec}.
 #' 
-#' @aliases import_ohlc.tiingo import_ohlc_tiingo
+#' @aliases import_ohlc.tiingo import_ohlc_collection.tiingo
 #' 
 #' @param symbol_spec A \code{symbol_spec} object, with one element for each
 #'    symbol that will be imported.
 #' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Arguments passed to other functions (not currently used).
 #' 
-#' @return A \code{multiple_ohlc} object, with one element for each
+#' @return A \code{ohlc_collection} object, with one element for each
 #'    \code{symbol_spec}.
 #' 
 #' @keywords IO connection
@@ -45,8 +45,7 @@
 #'      tiingo_data <- import_ohlc(sym_spec)
 #'  }
 #' 
-
-import_multi_ohlc.tiingo <-
+import_ohlc_collection.tiingo <-
 function(symbol_spec,
          dates = NULL,
          ...)
@@ -71,5 +70,5 @@ function(symbol_spec,
                ..., env = env, api.key = api_key)
 
     env <- eapply(env, .remove_colname_symbol)
-    structure(env, class = "multiple_ohlc")
+    structure(env, class = "ohlc_collection")
 }
