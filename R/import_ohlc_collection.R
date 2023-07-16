@@ -62,7 +62,7 @@ function(symbol_spec,
     symbols_by_source <- split(symbol_spec, names(symbol_spec))
 
     for (sym in names(symbols_by_source)) {
-        method_function <- getS3method("import_collection", sym)
+        method_function <- getS3method("import_ohlc_collection", sym)
 
         src_spec <- symbols_by_source[[sym]]
         attr(src_spec, "src_attr") <- .get_src_attr(symbol_spec)[[sym]]
