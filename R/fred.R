@@ -43,8 +43,8 @@
 #' # one symbol
 #' treasury_10y <- import_series(sym_fred("DGS10"))
 #'
-#' # multiple symbols
-#' treasury_rates <- import_collection(series_symbols)
+#' # multiple symbols (one wide xts object)
+#' treasury_rates <- import_series(series_symbols)
 #' }
 #'
 sym_fred <-
@@ -63,27 +63,18 @@ function(symbols, ..., curl_options = list())
 #' should not be called directly. Use \code{import_series} with one FRED
 #' \code{symbol_spec}.
 #'
-#' @aliases import_series.fred import_collection.fred
+#' @aliases import_series.fred
 #'
 #' @param symbol_spec A \code{symbol_spec} object, with one element for each
 #'    symbol that will be imported.
 #' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Arguments passed to other functions (not currently used).
 #'
-#' @return A \code{ohlc_collection} object, with one element for each
+#' @return A \code{xts} object, with all the columns for each
 #'    \code{symbol_spec}.
 #'
 #' @rdname fred
 #' @keywords IO
-#'
-#' @examples
-#'
-#'  ### Note: you must have a working internet
-#'  ### connection for these examples to work!
-#'  if (interactive()) {
-#'      sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
-#'      tiingo_data <- import_ohlc(sym_spec)
-#'  }
 #'
 import_series.fred <-
 function(symbol_spec,

@@ -3,7 +3,6 @@
 \name{sym_fred}
 \alias{sym_fred}
 \alias{import_series.fred}
-\alias{import_collection.fred}
 \title{Symbol specification for FRED}
 \usage{
 sym_fred(symbols, ..., curl_options = list())
@@ -27,7 +26,7 @@ An object of class \code{symbol_spec}. The object contains a
     \code{src_attr} attribute that stores any additional details that need
     to be used for the connection to the data source.
 
-A \code{ohlc_collection} object, with one element for each
+A \code{xts} object, with all the columns for each
    \code{symbol_spec}.
 }
 \description{
@@ -43,17 +42,9 @@ series_symbols <- sym_fred(c("DGS10", "DGS5"))
 # one symbol
 treasury_10y <- import_series(sym_fred("DGS10"))
 
-# multiple symbols
-treasury_rates <- import_collection(series_symbols)
+# multiple symbols (one wide xts object)
+treasury_rates <- import_series(series_symbols)
 }
-
-
- ### Note: you must have a working internet
- ### connection for these examples to work!
- if (interactive()) {
-     sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
-     tiingo_data <- import_ohlc(sym_spec)
- }
 
 }
 \references{
