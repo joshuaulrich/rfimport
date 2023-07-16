@@ -20,8 +20,8 @@
 
 #' Import a collection of data from one or more sources
 #'
-#' This function imports data that has columns with open, high, low, close,
-#' and possibly volume and/or adjusted close (if the data source returns it).
+#' This function imports multiple data series from one or more sources. Each
+#' series may have different column names.
 #'
 #' @param symbol_spec A symbol specification object.
 #' @param dates An ISO-8601 string specifying the start and/or end dates.
@@ -33,8 +33,10 @@
 #' @keywords IO connection
 #' @examples
 #'
-#' tickers <- sym_yahoo(c("AAPL", "NFLX"))
-#' collection <- import_collection(tickers)
+#' \dontrun{
+#' series_symbols <- sym_fred(c("DGS10", "DGS5"))
+#' collection <- import_collection(series_symbols)
+#' }
 #'
 import_collection <-
 function(symbol_spec,
