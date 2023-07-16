@@ -18,27 +18,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-.remove_colname_symbol <-
-function(object, remove_prefix = TRUE)
-{
-    if (remove_prefix) {
-        look_ahead_for_anything_followed_by_period <- "(?!(.|\n)*\\.)"
-
-        group_of_everything_before_first_period <- "(.*)\\."
-        group_of_everything_after_last_period <-
-            paste0("(", look_ahead_for_anything_followed_by_period,
-                   ".*$)")
-
-        pattern <-
-            paste0(group_of_everything_before_first_period,
-                   group_of_everything_after_last_period)
-
-        # set colnames to everything after last period
-        colnames(object) <- gsub(pattern, "\\2", colnames(object), perl = TRUE)
-    }
-    return(object)
-}
-
 # import intraday quotes
 import_quote <-
 function(symbol_spec, ...)
