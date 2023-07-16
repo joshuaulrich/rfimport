@@ -4,7 +4,7 @@
 \alias{sym_yahoo}
 \alias{import_ohlc_collection.yahoo}
 \alias{import_ohlc.yahoo}
-\title{Symbol specification for Yahoo Finance}
+\title{Symbol specification for Yahoo Finance OHLC data}
 \usage{
 sym_yahoo(symbols, ..., curl_options = list())
 
@@ -31,9 +31,10 @@ A \code{ohlc_collection} object, with one element for each
    \code{symbol_spec}.
 }
 \description{
-Imports data from Yahoo Finance for each symbol in \code{symbol_spec}. This
+Imports data from OHLC Yahoo Finance for each symbol in \code{symbol_spec}. This
 method should not be called directly. Use \code{import_ohlc_collection} with
-one or more Yahoo Finance \code{symbol_spec} objects.
+one or more Yahoo Finance \code{symbol_spec} objects, or \code{import_ohlc}
+to import one symbol.
 }
 \examples{
 

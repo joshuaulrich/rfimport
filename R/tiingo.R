@@ -66,11 +66,11 @@ function(symbols, ..., curl_options = list(), api_key = NULL)
     create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
-#' Import data from Tiingo
+#' Import OHLC data from Tiingo
 #'
-#' Imports data from Tiingo for each symbol in \code{symbol_spec}. This method
+#' Imports OHLC data from Tiingo for each symbol in \code{symbol_spec}. This method
 #' should not be called directly. Use \code{import_ohlc_collection} with one or
-#' more Tiingo \code{symbol_spec}.
+#' more Tiingo \code{symbol_spec}, or \code{import_ohlc} to import one symbol.
 #'
 #' @aliases import_ohlc.tiingo import_ohlc_collection.tiingo
 #'

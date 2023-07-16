@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Symbol specification for Yahoo Finance
+#' Symbol specification for Yahoo Finance OHLC data
 #'
 #' @param symbols Ticker symbols to import.
 #' @param \dots Additional source attributes.
@@ -56,11 +56,12 @@ function(symbols, ..., curl_options = list())
     create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
 }
 
-#' Import data from Yahoo Finance
+#' Import OHLC data from Yahoo Finance
 #'
-#' Imports data from Yahoo Finance for each symbol in \code{symbol_spec}. This
+#' Imports data from OHLC Yahoo Finance for each symbol in \code{symbol_spec}. This
 #' method should not be called directly. Use \code{import_ohlc_collection} with
-#' one or more Yahoo Finance \code{symbol_spec} objects.
+#' one or more Yahoo Finance \code{symbol_spec} objects, or \code{import_ohlc}
+#' to import one symbol.
 #'
 #' @aliases import_ohlc.yahoo import_ohlc_collection.yahoo
 #'

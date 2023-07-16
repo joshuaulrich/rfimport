@@ -33,9 +33,9 @@ A \code{ohlc_collection} object, with one element for each
    \code{symbol_spec}.
 }
 \description{
-Imports data from Tiingo for each symbol in \code{symbol_spec}. This method
+Imports OHLC data from Tiingo for each symbol in \code{symbol_spec}. This method
 should not be called directly. Use \code{import_ohlc_collection} with one or
-more Tiingo \code{symbol_spec}.
+more Tiingo \code{symbol_spec}, or \code{import_ohlc} to import one symbol.
 }
 \examples{
 
