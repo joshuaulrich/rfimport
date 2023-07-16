@@ -18,11 +18,58 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#' Symbol specification for Tiingo OHLC data
+#'
+#' @param symbols Ticker symbols to import.
+#' @param \dots Additional source attributes.
+#' @param curl_options Options passed to \pkg{curl} functions.
+#' @param api_key Your Tiingo API key (available for free).
+#'
+#' @return An object of class \code{symbol_spec}. The object contains a
+#'     \code{src_attr} attribute that stores any additional details that need
+#'     to be used for the connection to the data source.
+#'
+#' @references \url{https://www.tiingo.com/}, \url{https://api.tiingo.com/}
+#'
+#' @author Joshua Ulrich
+#'
+#' @rdname tiingo
+#' @keywords IO connection
+#' @examples
+#'
+#' \dontrun{
+#'     # one symbol
+#'     spy <- import_ohlc(sym_tiingo("SPY"))
+#'
+#'     # multiple symbols
+#'     tickers <- sym_tiingo(c("AAPL", "NFLX"), api_key = "*****")
+#'     ohlc <- import_ohlc_collection(tickers)
+#' }
+#'
+sym_tiingo <-
+function(symbols, ..., curl_options = list(), api_key = NULL)
+{
+    config_file <- "~/.R/quantmod-config.json"
+    if (file.exists(config_file)) {
+        api_key <- jsonlite::fromJSON(config_file)[["tiingo"]][["api_key"]]
+    } else if (is.null(api_key)) {
+        # url to where they can get a free api key
+        stop("you need an api key to import Tiingo data")
+    }
+
+    src_name <- "tiingo"
+    src_attr <- list(curl_options = curl_options,
+                     api_key = api_key,
+                     ...)
+
+    create_sym_spec(symbols, src_name = src_name, src_attr = src_attr)
+}
+
 #' Import data from Tiingo
 #' 
 #' Imports data from Tiingo for each symbol in \code{symbol_spec}. This method
-#' should not be called directly. Use \code{import_ohlc} with one or more
-#' Tiingo \code{symbol_spec}.
+#' should not be called directly. Use \code{import_ohlc_collection} with one or
+#' more Tiingo \code{symbol_spec}.
 #' 
 #' @aliases import_ohlc.tiingo import_ohlc_collection.tiingo
 #' 
@@ -34,7 +81,8 @@
 #' @return A \code{ohlc_collection} object, with one element for each
 #'    \code{symbol_spec}.
 #' 
-#' @keywords IO connection
+#' @rdname tiingo
+#' @keywords IO
 #' 
 #' @examples
 #' 
@@ -42,7 +90,7 @@
 #'  ### connection for these examples to work!
 #'  if (interactive()) {
 #'      sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
-#'      tiingo_data <- import_ohlc(sym_spec)
+#'      tiingo_data <- import_ohlc_collection(sym_spec)
 #'  }
 #' 
 import_ohlc_collection.tiingo <-
