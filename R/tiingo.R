@@ -37,13 +37,14 @@
 #' @keywords IO connection
 #' @examples
 #'
-#' \dontrun{
-#'     # one symbol
-#'     spy <- import_ohlc(sym_tiingo("SPY"))
+#' tickers <- sym_tiingo(c("AAPL", "NFLX"), api_key = "*****")
 #'
-#'     # multiple symbols
-#'     tickers <- sym_tiingo(c("AAPL", "NFLX"), api_key = "*****")
-#'     ohlc <- import_ohlc_collection(tickers)
+#' \dontrun{
+#' # one symbol
+#' spy <- import_ohlc(sym_tiingo("SPY"))
+#'
+#' # multiple symbols
+#' ohlc <- import_ohlc_collection(tickers)
 #' }
 #'
 sym_tiingo <-
@@ -66,26 +67,26 @@ function(symbols, ..., curl_options = list(), api_key = NULL)
 }
 
 #' Import data from Tiingo
-#' 
+#'
 #' Imports data from Tiingo for each symbol in \code{symbol_spec}. This method
 #' should not be called directly. Use \code{import_ohlc_collection} with one or
 #' more Tiingo \code{symbol_spec}.
-#' 
+#'
 #' @aliases import_ohlc.tiingo import_ohlc_collection.tiingo
-#' 
+#'
 #' @param symbol_spec A \code{symbol_spec} object, with one element for each
 #'    symbol that will be imported.
 #' @param dates An ISO-8601 string specifying the start and/or end dates.
 #' @param \dots Arguments passed to other functions (not currently used).
-#' 
+#'
 #' @return A \code{ohlc_collection} object, with one element for each
 #'    \code{symbol_spec}.
-#' 
+#'
 #' @rdname tiingo
 #' @keywords IO
-#' 
+#'
 #' @examples
-#' 
+#'
 #'  ### Note: you must have a working internet
 #'  ### connection for these examples to work!
 #'  if (interactive()) {

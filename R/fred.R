@@ -40,7 +40,11 @@
 #' series_symbols <- sym_fred(c("DGS10", "DGS5"))
 #'
 #' \dontrun{
-#'     treasury_rates <- import_series(series_symbols)
+#' # one symbol
+#' treasury_10y <- import_series(sym_fred("DGS10"))
+#'
+#' # multiple symbols
+#' treasury_rates <- import_collection(series_symbols)
 #' }
 #'
 sym_fred <-
@@ -56,8 +60,8 @@ function(symbols, ..., curl_options = list())
 #' Import data from FRED
 #'
 #' Imports data from FRED for each symbol in \code{symbol_spec}. This method
-#' should not be called directly. Use \code{import_series} with one or more
-#' FRED \code{symbol_spec}.
+#' should not be called directly. Use \code{import_series} with one FRED
+#' \code{symbol_spec}.
 #'
 #' @aliases import_series.fred import_collection.fred
 #'

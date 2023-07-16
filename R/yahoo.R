@@ -37,8 +37,13 @@
 #' @examples
 #'
 #' tickers <- sym_yahoo(c("AAPL", "NFLX"))
+#'
 #' \dontrun{
-#'     ohlc <- import_ohlc(tickers)
+#' # one symbol
+#' spy <- import_ohlc(sym_yahoo("SPY"))
+#'
+#' # multiple symbols
+#' ohlc <- import_ohlc_collection(tickers)
 #' }
 #'
 sym_yahoo <-
@@ -69,6 +74,7 @@ function(symbols, ..., curl_options = list())
 #'
 #' @rdname yahoo
 #' @keywords IO
+#'
 #' @examples
 #'
 #'  ### Note: you must have a working internet
