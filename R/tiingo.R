@@ -85,15 +85,6 @@ function(symbols, ..., curl_options = list(), api_key = NULL)
 #' @rdname tiingo
 #' @keywords IO
 #'
-#' @examples
-#'
-#'  ### Note: you must have a working internet
-#'  ### connection for these examples to work!
-#'  if (interactive()) {
-#'      sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
-#'      tiingo_data <- import_ohlc_collection(sym_spec)
-#'  }
-#' 
 import_ohlc_collection.tiingo <-
 function(symbol_spec,
          dates = NULL,

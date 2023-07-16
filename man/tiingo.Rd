@@ -49,14 +49,6 @@ spy <- import_ohlc(sym_tiingo("SPY"))
 ohlc <- import_ohlc_collection(tickers)
 }
 
-
- ### Note: you must have a working internet
- ### connection for these examples to work!
- if (interactive()) {
-     sym_spec <- sym_tiingo(c("IBM", "CSCO"), api_key = "[your_api_key]")
-     tiingo_data <- import_ohlc_collection(sym_spec)
- }
-
 }
 \references{
 \url{https://www.tiingo.com/}, \url{https://api.tiingo.com/}

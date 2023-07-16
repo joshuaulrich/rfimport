@@ -48,14 +48,6 @@ spy <- import_ohlc(sym_yahoo("SPY"))
 ohlc <- import_ohlc_collection(tickers)
 }
 
-
- ### Note: you must have a working internet
- ### connection for these examples to work!
- if (interactive()) {
-     sym_spec <- sym_yahoo(c("IBM", "CSCO"))
-     yahoo_data <- import_ohlc_collection(sym_spec)
- }
-
 }
 \references{
 \url{https://finance.yahoo.com/}

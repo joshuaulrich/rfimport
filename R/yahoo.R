@@ -76,15 +76,6 @@ function(symbols, ..., curl_options = list())
 #' @rdname yahoo
 #' @keywords IO
 #'
-#' @examples
-#'
-#'  ### Note: you must have a working internet
-#'  ### connection for these examples to work!
-#'  if (interactive()) {
-#'      sym_spec <- sym_yahoo(c("IBM", "CSCO"))
-#'      yahoo_data <- import_ohlc_collection(sym_spec)
-#'  }
-#'
 import_ohlc_collection.yahoo <-
 function(symbol_spec,
          dates = NULL,
