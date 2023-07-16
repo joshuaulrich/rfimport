@@ -93,10 +93,8 @@ function(symbol_spec,
     # drop attributes
     syms <- .drop_attributes(symbol_spec)
 
-    rtype <- attr(symbol_spec, "return_type")
-
     env <- new.env()
-    getSymbols(syms, src = "FRED", env = env, return.type = rtype, ...)
+    getSymbols(syms, src = "FRED", env = env, ...)
 
     lenv <- as.list(env)
 
