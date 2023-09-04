@@ -14,7 +14,7 @@ There are things in quantmod that we want to change, but they would certainly br
 
 Introducing the "rfimport" package. It is a place to work on new implementations that improve on the pieces in `getSymbols()` that we would like to change. This code is *extremely alpha*. This is the time to provide feedback, suggestions, feature requests, etc. Know that we will break things, maybe without warning. You should consider the API unstable until the 1.0.0 release.
 
-## How `getSymbols()` Works
+## How the Old `getSymbols()` Works
 
 By default `getSymbols()` creates objects for each `Symbol` in the environment it's called from, and it returns the value of the `Symbol` argument. It's generally good practice for functions to avoid changing anything in the user's environment (this is called having side-effects). It's better for functions to only return a value, like `getSymbols(..., auto.assign = FALSE)` does. `getSymbols()` does not support `auto.assign = FALSE` for more than one symbol.
 
@@ -26,8 +26,8 @@ By default `getSymbols()` creates objects for each `Symbol` in the environment i
 # What We've Learned
 
 * We should avoid the side-effect of creating objects in the calling environment.
-* Stock ticker symbology is a pain and we need a better way to handle it.
 * We can use S3 method dispatch instead of creating `getSymbols()` source methods.
+* Stock ticker symbology is a pain and we need a better way to handle it.
 * We need a way to provide functionality like the Defaults package did, but without side-effects.
 
 ## Automatically Creating Objects
@@ -59,20 +59,20 @@ head(prices[, symbols[1]])
 Automatically creating objects also makes passing all the data to another function awkward. It causes users to do things like:
 
 * Call `getSymbols()` in any function that needs data, which may mean the same data is imported multiple times.
-* Pass the same `symbols` object to `getSymbols()` and the other function. Then the other function searches through environments to find the objects with named with those `symbols`.
+* Pass the same `symbols` object to `getSymbols()` and the other function. Then the other function searches through environments to find the objects named with those `symbols`.
 * Users could put all the data in an environment and use that as an argument to the function, but I haven't seen many people use this pattern.
 
 The lesson: a function that imports data should *return* the data like a normal R function, without using or creating side-effects.
 
 Returning an object means we need a way to return multiple series in one object (e.g. a list). Returning one object also avoids the issue where the symbol is not a valid R object name (e.g. `getSymbols("^DJI")` creates an object named `DJI`). More on that later.
 
-### Source methods
+## Source methods
 
 Different `getSymbols()` source methods can (or may need to) have different arguments. Ideally the source methods wouldn't be exported because users shouldn't call them directly, like `getSymbols.yahoo("SPY")`. Not being exported makes it hard to find the help page for them, which means it's hard to know what arguments are available for various source methods.
 
 The source methods are named like S3 methods even though `getSymbols()` isn't a generic function and the source methods aren't actual S3 methods. This has the potential to create odd behavior that would confuse users.
 
-### Ticker Symbology
+## Ticker Symbology
 
 There are two major issues with ticker symbols.
 
@@ -81,11 +81,11 @@ There are two major issues with ticker symbols.
 
 Another issue is when the ticker symbol is similar to the name of one of the price columns. This has come up several times with Lowe's (LOW). The `Lo()` and `OHLC()` functions think all of the columns with the ticker symbol in the column name are the low price for the period.
 
-#### Same Security, Different Ticker
+### Same Security, Different Ticker
 
 This isn't `getSymbols()`'s fault and it's out of our control, but it needs to be handled better. Exchange and data source symbology is awful. Identifiers for the same series are often different across exchanges and data providers. For example: the symbol for Berkshire Hathaway B-class shares is "BRK-B" for Yahoo Finance, "BRK/B" for the SIP (Securities Information Processor), "BRK B" for ICE, and probably "BRK.B" somewhere else.
 
-#### Invalid R Object Names
+### Invalid R Object Names
 
 `getSymbols()` tries to create objects with valid R names, but only does so for *some* symbols that aren't valid R object names. For example, `BRK-B`, `BRK B`, and `BRK/B` aren't valid R objects names because valid names start with a letter or a dot (period), and can only contain letters, numbers, a dot, or an underscore.
 
@@ -132,7 +132,7 @@ setSymbolLookup(BRK.B = list(name = "BRK-B", src = "yahoo"))
 
 If I have to look at the source code to figure out how to do this, users don't have a chance. You may think, "but you could document how to do this", but writing documentation isn't fun. And who reads the documentation anyway? ;-)
 
-### Defaults Functionality
+## Defaults Functionality
 
 The "Defaults" functionality in quantmod comes from the archived Defaults package. This functionality allows users to set new default argument values to any `getSymbols()` source function. This is helpful because it makes importing easier. But it means `getSymbols()` relies on something other than its parameter values, and it's good practice to avoid side-effects like this.
 
@@ -166,7 +166,7 @@ library(rfimport)
 syms <- sym_yahoo("SPY")
 
 # Import some data from Yahoo Finance
-spy <- import(syms)
+spy <- import_ohlc(syms)
 ```
 
 ### Symbol Specification
