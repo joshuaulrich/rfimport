@@ -101,6 +101,7 @@ function(symbol_spec,
     }
 
     from_to <- .api$parse_iso8601_interval(dates)
+    from_to <- lapply(from_to, trunc, units = "days")
 
     # drop attributes
     syms <- .drop_attributes(symbol_spec)

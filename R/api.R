@@ -31,8 +31,7 @@ local({
             result <- list(start = Sys.Date() - 365,
                            end = Sys.Date())
         } else {
-            result <- xts::.parseISO8601(datetime)
-            result <- setNames(lapply(result, as.Date), c("start", "end"))
+            result <- setNames(xts::.parseISO8601(datetime), c("start", "end"))
         }
 
         if (is.na(result$start)) {
